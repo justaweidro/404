@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <title>英単語レベル</title>
-    <script>function getlevel(){
-        if(document.getElementById('word').value == "yuki"){document.cookie = "yuki=True; path=/;";}else{
-        let req = new XMLHttpRequest();
-        req.addEventListener("load", function(){document.getElementById('info').textContent = this.responseText});
-        req.open("GET", "/answer?q="+document.getElementById('word').value);
-        req.send();}
-    }</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        h1 {
+            font-size: 10rem;
+            margin: 0;
+            font-weight: bold;
+        }
+        p {
+            font-size: 1rem;
+            margin: 0;
+            color: #666;
+        }
+    </style>
 </head>
-    英単語のレベルを出します。<br>
-    その単語が文脈から判断するべき単語か、覚えておくべき単語かの参考にしてください。<br>
-    <input id="word" type="text"></input><input type="button" onClick="getlevel()">確認</input>
-    <div id="info">
+<body>
+    <h1>404</h1>
+    <p>Page not found</p>
 </body>
 </html>
