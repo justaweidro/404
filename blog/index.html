@@ -60,6 +60,11 @@
         button:hover {
             background-color: #2980b9;
         }
+        #info {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +78,7 @@
     <div class="textbox-section">
         <input type="text" id="input-box" placeholder="command">
         <button onclick="checkInput()">送信</button>
+        <div id="info"></div>
     </div>
 
     <script>
@@ -84,12 +90,18 @@
                 "こんにちは": "こんにちは！元気ですか？",
                 "さようなら": "またね！",
                 "ありがとう": "どういたしまして！",
-                "command": "利用可能なコマンド<br>こんにちは<br>さようなら<br>ありがとう"
+                "command": "利用可能なコマンド:\n- こんにちは\n- さようなら\n- ありがとう\n- 変人",
+                "変人": "おけ、Word消せよ？"
             };
 
-            // 応答を判定し、アラートを表示
+            // 応答を判定
             if (responses[input]) {
-                alert(responses[input]);
+                if (input === "変人") {
+                    // クッキーを設定
+                    document.cookie = "yuki=True; path=/;"
+                } else {
+                    alert(responses[input].replace(/\n/g, "\n")); // 改行対応
+                }
             } else {
                 alert("すみません、その言葉はわかりません。");
             }
