@@ -45,6 +45,25 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .response {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
         }
     </style>
 </head>
@@ -55,9 +74,27 @@
         <p>Page not found</p>
     </div>
 
-    <!-- テキストボックスセクション -->
+    <!-- テキストボックスとボタンセクション -->
     <div class="textbox-section">
-        <input type="text" placeholder="Type here...">
+        <input type="text" id="input-box" placeholder="入力してくれぇ">
+        <button onclick="checkInput()">送信</button>
+        <div class="response" id="response"></div>
     </div>
+
+    <script>
+        function checkInput() {
+            const input = document.getElementById('input-box').value.trim();
+            const response = document.getElementById('response');
+            
+            // 特定の言葉に応じた応答を定義
+            if (input === "こんにちは") {
+                response.textContent = "こんにちは！";
+            } else if (input === "404") {
+                response.textContent = "This is the 404 error page.";
+            } else {
+                response.textContent = "I don't understand that.";
+            }
+        }
+    </script>
 </body>
 </html>
