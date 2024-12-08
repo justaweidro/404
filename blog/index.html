@@ -76,8 +76,8 @@
 
     <!-- テキストボックスとボタンセクション -->
     <div class="textbox-section">
-        <input type="text" id="input-box" placeholder="入力してくれぇ">
-        <button onclick="checkInput()">送信</button>
+        <input type="text" id="input-box" placeholder=command">
+        <button onclick="checkInput()"></button>
         <div class="response" id="response"></div>
     </div>
 
@@ -86,13 +86,19 @@
             const input = document.getElementById('input-box').value.trim();
             const response = document.getElementById('response');
             
-            // 特定の言葉に応じた応答を定義
-            if (input === "こんにちは") {
-                response.textContent = "こんにちは！";
-            } else if (input === "404") {
-                response.textContent = "This is the 404 error page.";
+            // 入力と言葉の応答をオブジェクトで管理
+            const responses = {
+                "こんにちは": "こんにちは！元気ですか？",
+                "さようなら": "またね！",
+                "ありがとう": "どういたしまして！",
+                "command": "利用可能なコマンド: こんにちは, さようなら, ありがとう"
+            };
+
+            // 応答を判定
+            if (responses[input]) {
+                response.textContent = responses[input];
             } else {
-                response.textContent = "I don't understand that.";
+                response.textContent = "すみません、その言葉はわかりません。";
             }
         }
     </script>
