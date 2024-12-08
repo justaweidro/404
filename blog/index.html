@@ -60,11 +60,6 @@
         button:hover {
             background-color: #2980b9;
         }
-        .response {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #2c3e50;
-        }
     </style>
 </head>
 <body>
@@ -77,15 +72,13 @@
     <!-- テキストボックスとボタンセクション -->
     <div class="textbox-section">
         <input type="text" id="input-box" placeholder="command">
-        <button onclick="checkInput()"></button>
-        <div class="response" id="response"></div>
+        <button onclick="checkInput()">送信</button>
     </div>
 
     <script>
         function checkInput() {
             const input = document.getElementById('input-box').value.trim();
-            const response = document.getElementById('response');
-            
+
             // 入力と言葉の応答をオブジェクトで管理
             const responses = {
                 "こんにちは": "こんにちは！元気ですか？",
@@ -94,11 +87,11 @@
                 "command": "利用可能なコマンド: こんにちは, さようなら, ありがとう"
             };
 
-            // 応答を判定
+            // 応答を判定し、アラートを表示
             if (responses[input]) {
-                response.textContent = responses[input];
+                alert(responses[input]);
             } else {
-                response.textContent = "すみません、その言葉はわかりません。";
+                alert("すみません、その言葉はわかりません。");
             }
         }
     </script>
