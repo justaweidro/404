@@ -1,120 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Error</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-        .fixed-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #ccc;
-            text-align: center;
-            z-index: 1000;
-            padding: 10px 0;
-        }
-        .fixed-header h1 {
-            font-size: 3rem;
-            margin: 0;
-            font-weight: bold;
-        }
-        .fixed-header p {
-            font-size: 1rem;
-            margin: 0;
-            color: #666;
-        }
-        .content {
-            margin-top: 120px; /* ヘッダー分の余白を確保 */
-            text-align: center;
-        }
-        .textbox-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        input[type="text"] {
-            width: 80%;
-            max-width: 400px;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        #info {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #2c3e50;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIチャット</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #chatbox {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    #messages {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+      background-color: #f9f9f9;
+    }
+    .message {
+      margin: 5px 0;
+    }
+    .user {
+      text-align: right;
+      color: blue;
+    }
+    .ai {
+      text-align: left;
+      color: green;
+    }
+    #input-area {
+      display: flex;
+      margin-top: 10px;
+    }
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #send-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #send-button:hover {
+      background-color: darkblue;
+    }
+  </style>
 </head>
 <body>
-    <!-- 固定ヘッダー -->
-    <div class="fixed-header">
-        <h1>404</h1>
-        <p>Page not found</p>
+  <div id="chatbox">
+    <h1>AIチャット</h1>
+    <div id="messages"></div>
+    <div id="input-area">
+      <input type="text" id="user-input" placeholder="メッセージを入力..." />
+      <button id="send-button">送信</button>
     </div>
+  </div>
 
-    <!-- コンテンツセクション -->
-    <div class="content">
-        <div class="textbox-section">
-            <input type="text" id="input-box" placeholder="command">
-            <button onclick="checkInput()">送信</button>
-            <div id="info"></div>
-        </div>
-    </div>
+  <script>
+    const messagesDiv = document.getElementById("messages");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
 
-    <script>
-        function checkInput() {
-            const input = document.getElementById('input-box').value.trim();
+    // メッセージを画面に表示する関数
+    function displayMessage(text, sender) {
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${sender}`;
+      messageDiv.textContent = text;
+      messagesDiv.appendChild(messageDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight; // 最新メッセージにスクロール
+    }
 
-            // 入力と言葉の応答をオブジェクトで管理
-            const responses = {
-                "こんにちは": "こんにちは！元気ですか？",
-                "さようなら": "またね！",
-                "ありがとう": "どういたしまして！",
-                "command": "利用可能なコマンド:\n- こんにちは\n- さようなら\n- ありがとう\n- 変人",
-            };
+    // ボタンクリック時の処理
+    sendButton.addEventListener("click", async () => {
+      const userMessage = userInput.value.trim();
+      if (!userMessage) return;
 
-            // 応答を判定
-            if (responses[input]) {
-                if (input === "変人") {
-                    // クッキーを設定
-                    document.cookie = "yuki=True; path=/;";
-                    alert("yukiクッキーが承認されました！");
-                } else {
-                    alert(responses[input].replace(/\n/g, "\n")); // 改行対応
-                }
-            } else {
-                alert("すみません、その言葉はわかりません。");
-            }
-        }
-    </script>
+      // ユーザーメッセージを表示
+      displayMessage(userMessage, "user");
+      userInput.value = "";
+
+      // AIにメッセージを送信
+      displayMessage("考え中...", "ai"); // 仮メッセージ
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer YOUR_API_KEY" // ここにOpenAIのAPIキーを入力
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo", // 使用するモデル
+            messages: [{ role: "user", content: userMessage }]
+          })
+        });
+        const data = await response.json();
+        const aiMessage = data.choices[0].message.content;
+        messagesDiv.lastChild.remove(); // 「考え中...」を削除
+        displayMessage(aiMessage, "ai");
+      } catch (error) {
+        messagesDiv.lastChild.remove(); // 「考え中...」を削除
+        displayMessage("エラーが発生しました。", "ai");
+        console.error(error);
+      }
+    });
+
+    // Enterキーでも送信
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendButton.click();
+      }
+    });
+  </script>
 </body>
 </html>
