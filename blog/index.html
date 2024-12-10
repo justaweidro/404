@@ -12,23 +12,30 @@
             color: #333;
             background-color: #f8f9fa;
         }
-        .section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ccc;
             text-align: center;
+            z-index: 1000;
+            padding: 10px 0;
         }
-        h1 {
-            font-size: 10rem;
+        .fixed-header h1 {
+            font-size: 3rem;
             margin: 0;
             font-weight: bold;
         }
-        p {
+        .fixed-header p {
             font-size: 1rem;
             margin: 0;
             color: #666;
+        }
+        .content {
+            margin-top: 120px; /* ヘッダー分の余白を確保 */
+            text-align: center;
         }
         .textbox-section {
             height: 100vh;
@@ -68,17 +75,19 @@
     </style>
 </head>
 <body>
-    <!-- 404表示セクション -->
-    <div class="section">
+    <!-- 固定ヘッダー -->
+    <div class="fixed-header">
         <h1>404</h1>
         <p>Page not found</p>
     </div>
 
-    <!-- テキストボックスとボタンセクション -->
-    <div class="textbox-section">
-        <input type="text" id="input-box" placeholder="command">
-        <button onclick="checkInput()">送信</button>
-        <div id="info"></div>
+    <!-- コンテンツセクション -->
+    <div class="content">
+        <div class="textbox-section">
+            <input type="text" id="input-box" placeholder="command">
+            <button onclick="checkInput()">送信</button>
+            <div id="info"></div>
+        </div>
     </div>
 
     <script>
@@ -87,17 +96,18 @@
 
             // 入力と言葉の応答をオブジェクトで管理
             const responses = {
-                "こんにちは": "こんにちは！",
+                "こんにちは": "こんにちは！元気ですか？",
                 "さようなら": "またね！",
                 "ありがとう": "どういたしまして！",
-                "command": "利用可能なコマンド\n- こんにちは\n- さようなら\n- ありがとう",
+                "command": "利用可能なコマンド:\n- こんにちは\n- さようなら\n- ありがとう\n- 変人",
             };
 
             // 応答を判定
             if (responses[input]) {
                 if (input === "変人") {
                     // クッキーを設定
-                    document.cookie = "yuki=True; path=/;"
+                    document.cookie = "yuki=True; path=/;";
+                    alert("yukiクッキーが承認されました！");
                 } else {
                     alert(responses[input].replace(/\n/g, "\n")); // 改行対応
                 }
