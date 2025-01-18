@@ -1,7 +1,9 @@
 <html lang="ja-JP">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="disabled-adaptations" content="watch">
     <style>
         :root {
             color-scheme: light dark;
@@ -62,26 +64,31 @@
             color: inherit;
         }
     </style>
-    <title>アクセスエラー</title>
+    <title>ページを開けません</title>
     <script>
+        // デバイスの種類を判別してメッセージを変更するスクリプト
         document.addEventListener("DOMContentLoaded", function () {
-            // リンクのリスト
-            const links = [
-                "https://www.google.co.jp/",
-                "https://www.yahoo.co.jp/",
-                "https://www.bing.com/?cc=jp"
-            ];
-
-            // ランダムにリンクを選択
-            const randomLink = links[Math.floor(Math.random() * links.length)];
-
-            // メッセージを設定
+            const userAgent = navigator.userAgent.toLowerCase();
             const messageElement = document.getElementById("error-message");
-            messageElement.innerHTML = `指定されたページ <a href="${randomLink}" target="_blank">${randomLink}</a> にアクセスできませんでした。`;
+
+            if (userAgent.includes("ipad") || (userAgent.includes("macintosh") && 'ontouchend' in document)) {
+                // iPad
+                messageElement.textContent = "iPadがインターネットに接続されていないため、指定されたページをSafariで開くことができません。";
+            } else if (userAgent.includes("iphone") || userAgent.includes("android")) {
+                // スマホ
+                messageElement.textContent = "スマートフォンがインターネットに接続されていないため、指定されたページを開くことができません。";
+            } else {
+                // PCその他
+                messageElement.textContent = "PCがインターネットに接続されていないため、指定されたページを開くことができません。";
+            }
         });
     </script>
 </head>
 <body class="pad">
+    <p id="error-message">デバイスがインターネットに接続されていないため、指定されたページを開くことができません。</p>
+</body>
+</html>
+
     <p id="error-message">ページにアクセスできませんでした。</p>
 </body>
 </html>
